@@ -58,6 +58,7 @@ public final class ConfigurationResolver {
 		
 		List<File> classes = ClassFinder.find(rootFolder);
 		for (File f : classes) {
+			// System.out.println("Checking " + f);
 			findExtendedArtemisTypes(f); // for resolving children of children
 		}
 		

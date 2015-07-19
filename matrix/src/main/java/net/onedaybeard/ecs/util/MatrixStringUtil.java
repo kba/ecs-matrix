@@ -73,6 +73,9 @@ public final class MatrixStringUtil {
 
 	public static String shortName(Type type) {
 		String name = type.getClassName();
+		if (null == name) {
+			return "";
+		}
 		return name.substring(name.lastIndexOf('.') + 1);
 	}
 }

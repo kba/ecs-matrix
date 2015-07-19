@@ -20,14 +20,21 @@ public class EcsMapping {
 		typeMappings = new ArrayList<RowTypeMapping>();
 		Map<Type, Integer> componentIndices = getComponentIndices(componentSet);
 		for (EcsTypeData system : artemisTypes) {
-			RowTypeMapping mappedType = RowTypeMapping.from(
+			RowTypeMapping mappedType;
+			try {
+			 mappedType = RowTypeMapping.from(
 					system, resolver, componentIndices);
+			} catch(RuntimeException e) {
+				continue;
+			}
 			typeMappings.add(mappedType);
 		}
 
 		List<String> componentColumns = new ArrayList<String>();
 		for (Type component : componentSet) {
 			String name = component.getClassName();
+			if (null == name)
+				continue;
 			name = name.substring(name.lastIndexOf('.') + 1);
 			componentColumns.add(name);
 		}
